@@ -1,7 +1,12 @@
+.PHONY: build
 .DEFAULT_TARGET := run
 
 run: 
 	python ./main.py
+
+build:
+	echo 'building to ./dist/main'
+	pyinstaller --onefile ./main.py
 
 # setups the local dev environment with virtualenv
 setup-dev:

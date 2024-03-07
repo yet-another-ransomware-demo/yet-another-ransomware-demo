@@ -13,6 +13,7 @@
           pkgs.python311
           pkgs.virtualenv
           pkgs.gnumake
+          pkgs.zlib
         ];
       };
     in
@@ -20,3 +21,5 @@
       devShells.${system}.default = fhs.env;
     };
 }
+
+

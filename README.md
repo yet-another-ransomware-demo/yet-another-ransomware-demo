@@ -9,8 +9,9 @@ For MacOS users, please run a Virtual Machine to emulate the x86 environment
 
 
 ## Usage
-Note that by default, this project will run the `ransomware` against the `os_root` directory
+Note that by default, this project will run the `ransomware` demo against the `os_root` directory in its current directory
 ```sh
+# to run the demo
 make run
 ```
 
@@ -22,4 +23,10 @@ make test-encryption
 
 # to test the decryption
 make test-decryption
+```
+
+## Building
+The project uses `pyinstaller` to build the python script as a binary
+```sh
+make build
 ```
