@@ -9,5 +9,9 @@ build
 dist
 main.spec
 
+# mock env
+os_root
+
 # custom
 key
+*.pem

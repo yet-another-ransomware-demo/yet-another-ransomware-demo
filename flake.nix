@@ -15,6 +15,9 @@
           pkgs.gnumake
           pkgs.zlib
         ];
+        profile = ''
+          source venv/bin/activate
+        '';
       };
     in
     {

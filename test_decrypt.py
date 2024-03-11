@@ -2,7 +2,7 @@
 from core import decrypt_file, load_key_from_file
 from core import find_files
 
-def test_decrypt_file():
+def test_crypt_file():
     # load key from file
     l_key = load_key_from_file("key")
 
