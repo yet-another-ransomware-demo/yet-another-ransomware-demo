@@ -8,6 +8,7 @@ venv
 build
 dist
 main.spec
+main
 
 # mock env
 os_root
