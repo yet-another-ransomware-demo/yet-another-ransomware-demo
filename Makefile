@@ -36,12 +36,12 @@ attacker-decrypt:
 
 # ============= CLI MOCK OS SCRIPTS ============
 # creates a mock os directory in os_root
-gen-mock:
+mock-gen:
 	@for f in root home bin dev opt run var; do \
 		mkdir -p os_root/$$f; \
 		echo "file in os_root/$$f" > os_root/$$f/file; \
 	done
 
 # iterate the mock os directory and view the file contents
-view-mock:
+mock-view:
 	@find os_root -type f -exec sh -c 'echo === {} === && cat {} && printf "\n\n"' \;
