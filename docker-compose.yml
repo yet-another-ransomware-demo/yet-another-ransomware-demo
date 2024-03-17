@@ -2,6 +2,7 @@ version: "3"
 
 services:
   ubuntu-01:
+    container_name: ubuntu-01
     image: apache-2.4.49-vul-demo:latest
     build: .
     ports:
@@ -9,9 +10,10 @@ services:
     environment:
       - vncpassword=ubuntu
   ubuntu-02:
+    container_name: ubuntu-02
     image: apache-2.4.49-vul-demo:latest
     build: .
     ports:
-      - 8080:8080
+      - 8081:8080
     environment:
       - vncpassword=ubuntu

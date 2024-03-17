@@ -1,6 +1,10 @@
 # Yet Another Ransomware Demo (YARD)
 
-This project serves as a research for ransomware
+## Introduction
+WARNING: Educational Purposes Only
+
+This repository contains a proof-of-concept ransomware implementation. It is intended for educational purposes only and should never be used in a real-world environment. Running this code on a system you don't have explicit permission to modify could result in data loss or system damage.
+
 ## Dependencies
 - Python
 - Virtualenv
@@ -18,16 +22,16 @@ Note that by default, this project will run the ransomware demo against the `os_
 You can generate an fake `os_root` directory using:
 ```sh
 # generate the fake os_root dir
-make gen-mock
+make mock-gen
 
 # view the contents of the files in the fake os_root dir
-make view-mock
+make mock-view
 ```
 
 Before the attack can happen, the attacker will need to generate an RSA key pair:
 ```sh
 # generate the attacker's keys
-make attacker-gen
+make attacker-keygen
 
 # to check the keys generated
 ls attacker
@@ -48,7 +52,7 @@ make build
 Running the demo does the following:
 1. Generates a Symmetric Key
 2. Encrypts the Symmetric Key with the attacker's public key (uses `attacker/public-key.pem` by default, can be changed with `--pub` flag) and saves it in the current directory as a file called `key`
-3. Encrypt the files with the Symmetric Key generate in Step 1
+3. Encrypt the files with the Symmetric Key generated in Step 1
 4. Show Ransom UI
 
 After the demo has ran, you are free to close the UI, as you can re-open it with `./main` or `make run` again. This command checks for the `key` file and if it exists, it wouldn't run the encryption again.
