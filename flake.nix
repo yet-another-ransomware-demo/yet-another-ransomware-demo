@@ -10,13 +10,18 @@
       fhs = pkgs.buildFHSUserEnv {
         name = "fhs-shell";
         targetPkgs = pkgs: [
-          pkgs.python311
-          pkgs.virtualenv
+          (pkgs.python311.withPackages (ps: with ps; [
+            tkinter
+            cryptography
+            rsa
+          ]))
           pkgs.gnumake
           pkgs.zlib
+          pkgs.libGL
+          pkgs.glib
+          pkgs.stdenv.cc.cc
         ];
         profile = ''
-          source venv/bin/activate
         '';
       };
     in

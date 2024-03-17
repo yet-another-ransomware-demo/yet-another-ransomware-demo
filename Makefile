@@ -21,7 +21,7 @@ build:
 
 # cleans the current build
 clean:
-	rm -rf os_root attacker/*.pem key build dist main.spec main
+	rm -rf os_root key build dist main.spec main
 
 # ============= ATTACKER SCRIPTS ===============
 # generates the attacker's public and private key

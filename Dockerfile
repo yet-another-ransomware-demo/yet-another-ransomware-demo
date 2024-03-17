@@ -4,8 +4,9 @@ USER root
 # install deps for httpd
 RUN apt update -y
 RUN apt install libapr1-dev libaprutil1-dev -y
-RUN apt install gcc -y
+RUN apt install gcc libc6 -y
 RUN apt install libpcre3-dev libpcre3 -y
+RUN apt install zlib1g-dev -y
 RUN apt install make
 
 # download and install binary for httpd
