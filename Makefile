@@ -15,7 +15,7 @@ run:
 # builds the program to a binary
 build:
 	echo 'building to ./dist/main'
-	python -m eel main.py ui --onefile
+	pyinstaller main.py --onefile
 	cp dist/main .
 	rm -rf build dist main.spec
 

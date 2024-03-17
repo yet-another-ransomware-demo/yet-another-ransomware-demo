@@ -9,17 +9,19 @@
       pkgs = nixpkgs.legacyPackages.${system};
       fhs = pkgs.buildFHSUserEnv {
         name = "fhs-shell";
-        targetPkgs = pkgs: [
-          (pkgs.python311.withPackages (ps: with ps; [
+        targetPkgs = pkgs: with pkgs; [
+          (python310.withPackages (ps: with ps; [
             tkinter
             cryptography
             rsa
+            virtualenv
           ]))
-          pkgs.gnumake
-          pkgs.zlib
-          pkgs.libGL
-          pkgs.glib
-          pkgs.stdenv.cc.cc
+          tcl
+          gnumake
+          zlib
+          libGL
+          glib
+          stdenv.cc.cc
         ];
         profile = ''
         '';
