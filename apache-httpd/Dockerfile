@@ -12,10 +12,13 @@ RUN apt install make
 # download and install binary for httpd
 # https://archive.apache.org/dist/httpd/
 RUN cd /opt && wget https://archive.apache.org/dist/httpd/httpd-2.4.49.tar.gz && tar -xvf httpd-2.4.49.tar.gz
-RUN cd /opt/httpd-2.4.49 && ./configure && make && make install 
+RUN mkdir /opt/apache2 
+RUN cd /opt/httpd-2.4.49 && ./configure --prefix=/opt/apache2 && make && make install 
 
 # copy vulnerable conf setup
 # https://blog.qualys.com/vulnerabilities-threat-research/2021/10/27/apache-http-server-path-traversal-remote-code-execution-cve-2021-41773-cve-2021-42013
-COPY ./conf/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./conf/httpd.conf /opt/apache2/conf/httpd.conf
+RUN chown -R www-data:www-data /opt/apache2
+RUN usermod -aG www-data daemon
 
-CMD /usr/local/apache2/bin/apachectl start && bash /start.sh
+CMD su www-data -s /bin/bash -c "/opt/apache2/bin/apachectl start" && bash /start.sh
