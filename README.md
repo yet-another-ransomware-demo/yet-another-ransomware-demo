@@ -14,7 +14,7 @@ This project is a mono-repo of 3 components
 
 ## Dependencies
 This demo was built on a ubuntu-amd64-18.06 VM. There is no guarantee support for other OS-es.
-You can find the setup script for an ubuntu-amd64-18.06 VM that installs all the OS dev dependencies at `ransomware/ubuntu-dev-setup.sh`.
+You can find the setup script for an ubuntu-amd64-18.06 VM that installs all the OS dev dependencies at `ransomware/scripts/ubuntu-dev-setup.sh`.
 - make
 - python3 pip3
 - tkinter
@@ -66,7 +66,7 @@ Note that by default, the ransomware looks for a file named `public_key.pem` at 
 ```
 
 ### Installing the Payload on target
-As part of the PoC of delivering a ransomware, we've crafted a shell script to install a released version of the `ransomware` along with a `public_key.pem`
+As part of the PoC of delivering a ransomware, we've crafted a shell script `ransomware/scripts/dangerous-installs.sh` to install a released version of the `ransomware` along with a `public_key.pem` on a target system.
 
 
 #### Encryption
