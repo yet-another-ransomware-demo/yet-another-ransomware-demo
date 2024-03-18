@@ -52,13 +52,11 @@ pip install -r requirements.txt
 make build
 ```
 
-After building, you should see a binary `ransomware` file generated
+After building, you should see a binary file at `ransomware/dist/ransomware` directory of the project.
+Note that by default, the ransomware looks for a file named `public_key.pem` at its current directory, this can be changed along with other configurations of the ransomware with the flags below:
+```sh
+./ransomware --help
 
-### Installing the Payload
-As part of the PoC of delivering a ransomware, we've crafted a simple shell script to install a released version of the `ransomware` along with a `public_key.pem`
-
-
-```
 --pub PUBLIC_KEY_FILE
 	the public key to encrypt the sym key with
 --path OS_ROOT_PATH   the directory to start encrypting from, can be changed
@@ -66,6 +64,10 @@ As part of the PoC of delivering a ransomware, we've crafted a simple shell scri
 --enc-sym-key ENC_SYM_KEY
 	the location to save the encrypted sym key
 ```
+
+### Installing the Payload on target
+As part of the PoC of delivering a ransomware, we've crafted a shell script to install a released version of the `ransomware` along with a `public_key.pem`
+
 
 #### Encryption
 Note that by default, this project will run the ransomware demo against the `os_root` directory in its current directory.

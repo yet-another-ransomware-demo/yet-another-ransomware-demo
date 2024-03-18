@@ -7,8 +7,8 @@ venv
 # pyinstaller
 build
 dist
-main.spec
-main
+ransomware.spec
+ransomware
 
 # mock env
 os_root

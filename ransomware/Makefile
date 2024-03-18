@@ -9,16 +9,11 @@ run:
 # builds the program to a binary
 build:
 	echo 'building to ./dist/main'
-	#pyinstaller --add-data="attacker/public_key.pem:attacker" --onefile ransomware/main.py
-	pyinstaller --onefile main.py
-
-	#pyinstaller main.py --add-data="attacker/attacker_public_key:attacker/public_key.pem"
-	#cp dist/main .
-	#rm -rf build dist main.spec
+	pyinstaller -n 'ransomware' --onefile main.py
 
 # cleans the current build
 clean:
-	rm -rf os_root key build dist main.spec main
+	rm -rf os_root key build dist ransomware.spec ransomware
 
 # ============= CLI MOCK OS SCRIPTS ============
 # creates a mock os directory in os_root
