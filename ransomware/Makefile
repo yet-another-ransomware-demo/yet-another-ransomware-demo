@@ -2,12 +2,6 @@
 .DEFAULT_TARGET := run
 
 # ============= DEV SCRIPTS ===============
-# setups the local dev environment with virtualenv
-setup:
-	python3 -m virtualenv venv
-	source venv/bin/activate
-	pip install -r requirements.txt
-
 # runs the program locally without pyinstaller
 run: 
 	python ./main.py

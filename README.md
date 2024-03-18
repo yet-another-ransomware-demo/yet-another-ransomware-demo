@@ -3,30 +3,78 @@
 ## Introduction
 WARNING: Educational Purposes Only
 
-This repository contains a proof-of-concept ransomware implementation. It is intended for educational purposes only and should never be used in a real-world environment. Running this code on a system you don't have explicit permission to modify could result in data loss or system damage.
+This repository contains a proof-of-concept ransomware implementation. It is intended for educational purposes only and should never be used in a real-world environment. 
+Running this code on a system you don't have explicit permission to modify could result in data loss or system damage.
+
+## Repository Structure
+This project is a mono-repo of 3 components
+1. apache-httpd - Configs and Dockerfiles to build a vulnerable apache httpd 2.4.49 server susceptible to remote code execution
+2. attacker - Ransomware attacker's public key, private key and helper scripts
+3. ransomware - Ransomware's source code
 
 ## Dependencies
-- Python
-- Virtualenv
-- Make
+This demo was built on a ubuntu-amd64-18.06 VM. There is no guarantee support for other OS-es.
+You can find the setup script for an ubuntu-amd64-18.06 VM that installs all the OS dev dependencies at `ransomware/ubuntu-dev-setup.sh`.
+- make
+- python3 pip3
+- tkinter
+- virtualenv
 
-```sh
-# to setup the virtualenv (venv)
-# note: you should have venv installed before running this
-make setup
-```
-
-## Monorepo
-This project is a mono-repo of 3 components
-1. apache-httpd - Contains the configs and Dockerfiles to build a vulnerable apache httpd 2.4.49 server susceptible to remote code execution
-2. attacker - Contains the ransomware attacker's public key, private key and helper scripts
-3. ransomware - Contains the ransomware's source code
 
 ## Usage
+
+### Building/Packaging the Payload (Optional)
+The **payload** of the ransomware consist of 2 items:
+1. The attacker's public key
+2. The binary of the ransomware
+
+**1. Attacker's public key**
+The project comes with a copy of a sample attacker's public key at `attacker/public_key.pem` which will be used for all the official releases on github.
+Should you need to generate a new key, you can use the `attacker/gen-attacker-key.py` script.
+
+**2. Building the ransomware**
+To build the ransomware, we will need a python environment with the packages recorded in `ransomware/requirements.txt`.
+It is recommended that you create a virtualenv to contain the packages:
+```sh
+# from the root of the project, cd to ransomware subdir
+cd ransomware
+
+# create a venv
+python3 -m virtualenv venv
+
+# activate the venv
+source venv/bin/activate
+
+# install the required packages
+pip install -r requirements.txt
+
+# build the ransomware source code with the activated venv
+make build
+```
+
+After building, you should see a binary `ransomware` file generated
+
+### Installing the Payload
+As part of the PoC of delivering a ransomware, we've crafted a simple shell script to install a released version of the `ransomware` along with a `public_key.pem`
+
+
+```
+--pub PUBLIC_KEY_FILE
+	the public key to encrypt the sym key with
+--path OS_ROOT_PATH   the directory to start encrypting from, can be changed
+	to a specific folder to run on that folder only
+--enc-sym-key ENC_SYM_KEY
+	the location to save the encrypted sym key
+```
+
 #### Encryption
 Note that by default, this project will run the ransomware demo against the `os_root` directory in its current directory.
+This can be changed with the flags 
 You can generate an fake `os_root` directory using:
 ```sh
+# cd into the ransomware dir
+cd ransomware
+
 # generate the fake os_root dir
 make mock-gen
 
@@ -36,7 +84,10 @@ make mock-view
 
 Before the attack can happen, the attacker will need to generate an RSA key pair:
 ```sh
-# generate the attacker's keys
+# cd out to the attacker folder
+cd ../attacker
+
+# generate the attacker's keys, or alternatively use the default given keys in the repo
 make attacker-keygen
 
 # to check the keys generated
@@ -46,7 +97,7 @@ ls attacker
 ```
 
 With the attacker's public key, we can now start the ransomware demo with:
-```sh
+```s
 # to run the demo
 make run
 
@@ -79,5 +130,3 @@ With the key e.g: `n1f6E3RofoXlIeUFP2onpcsi7EcBYd-zgrOG4lNdcdc=`, we would enter
 ![](./docs/demo-decrypt.png)
 
 ## Development
-This demo was built on a ubuntu-amd64-18.06 VM. There is no guarantee support for other OSes
-You can find the setup script for an ubuntu-amd64-18.06 VM that installs all the dev dependencies at `ubuntu-dev-setup.sh`
