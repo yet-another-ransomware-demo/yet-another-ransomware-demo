@@ -1,9 +1,0 @@
-altgraph==0.17.4
-cffi==1.16.0
-cryptography==42.0.5
-packaging==24.0
-pyasn1==0.5.1
-pycparser==2.21
-pyinstaller==6.5.0
-pyinstaller-hooks-contrib==2024.3
-rsa==4.9

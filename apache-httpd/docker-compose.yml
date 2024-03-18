@@ -1,5 +1,6 @@
 version: "3"
 
+# builds two containers of the vulnerable webserver
 services:
   ubuntu-01:
     container_name: ubuntu-01

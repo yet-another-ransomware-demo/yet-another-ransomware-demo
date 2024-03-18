@@ -16,6 +16,6 @@ RUN cd /opt/httpd-2.4.49 && ./configure && make && make install
 
 # copy vulnerable conf setup
 # https://blog.qualys.com/vulnerabilities-threat-research/2021/10/27/apache-http-server-path-traversal-remote-code-execution-cve-2021-41773-cve-2021-42013
-COPY ./apache-httpd/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./conf/httpd.conf /usr/local/apache2/conf/httpd.conf
 
 CMD /usr/local/apache2/bin/apachectl start && bash /start.sh

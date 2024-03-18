@@ -16,6 +16,12 @@ This repository contains a proof-of-concept ransomware implementation. It is int
 make setup
 ```
 
+## Monorepo
+This project is a mono-repo of 3 components
+1. apache-httpd - Contains the configs and Dockerfiles to build a vulnerable apache httpd 2.4.49 server susceptible to remote code execution
+2. attacker - Contains the ransomware attacker's public key, private key and helper scripts
+3. ransomware - Contains the ransomware's source code
+
 ## Usage
 #### Encryption
 Note that by default, this project will run the ransomware demo against the `os_root` directory in its current directory.
@@ -71,3 +77,7 @@ Decrypted contents: n1f6E3RofoXlIeUFP2onpcsi7EcBYd-zgrOG4lNdcdc=
 
 With the key e.g: `n1f6E3RofoXlIeUFP2onpcsi7EcBYd-zgrOG4lNdcdc=`, we would enter this key into the textbox in the GUI and press the decrypt button.
 ![](./docs/demo-decrypt.png)
+
+## Development
+This demo was built on a ubuntu-amd64-18.06 VM. There is no guarantee support for other OSes
+You can find the setup script for an ubuntu-amd64-18.06 VM that installs all the dev dependencies at `ubuntu-dev-setup.sh`

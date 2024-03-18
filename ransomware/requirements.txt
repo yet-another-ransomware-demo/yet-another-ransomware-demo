@@ -1,0 +1,11 @@
+altgraph==0.17.4
+cffi==1.15.1
+cryptography==40.0.2
+importlib-metadata==4.8.3
+pyasn1==0.5.1
+pycparser==2.21
+pyinstaller==4.10
+pyinstaller-hooks-contrib==2022.0
+rsa==4.9
+typing_extensions==4.1.1
+zipp==3.6.0
