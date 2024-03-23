@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 permissions:
   contents: read
@@ -15,14 +15,16 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-20.04
+    
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+        
+    # install dependencies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -30,3 +32,16 @@ jobs:
         pip install -r requirements.txt
         make build
         
+    # create release on github
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          New release of ransomware build
+        draft: false
+        prerelease: false
