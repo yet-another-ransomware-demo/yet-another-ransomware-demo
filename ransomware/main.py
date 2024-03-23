@@ -92,8 +92,8 @@ if __name__ == "__main__":
                 try:
                     print(f"decrypted {file}")
                     decrypt_file(file, l_key)
-                except Exception:
-                    print("failed")
+                except Exception as e:
+                    print(f"error with {e}")
 
             # success message
             tkinter.messagebox.showinfo("decrypt files", "decrypted files with the given key")
