@@ -29,20 +29,24 @@ RUN apt install xdotool xclip autocutsel -y
 # create apache user and home dir and set password to apache
 RUN useradd -ms /bin/bash apache
 WORKDIR /home/apache
-RUN chown apache:apache /.novnc
-RUN chown -R apache:apache /home/apache
 RUN echo "apache:apache" | chpasswd
 RUN echo "apache ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 
 # setup ssh
 EXPOSE 22
 RUN apt install -y openssh-server
-RUN mkdir /var/run/sshd
+RUN mkdir -p /var/run/sshd /home/apache/.ssh
+RUN touch /home/apache/.ssh/authorized_keys
 RUN echo 'root:apache' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN ssh-keygen -A
 
+# set all permissions to apache after
+RUN chown apache:apache /.novnc
+RUN chown -R apache:apache /home/apache
+
 # switch to apache user before starting apache server
 USER apache
+WORKDIR /home/apache
 CMD [ "/bin/sh", "-c", "sudo /usr/sbin/sshd -D & /home/apache/server/bin/apachectl start && /start.sh" ]

@@ -3,6 +3,7 @@ version: "3"
 # builds two containers of the vulnerable webserver
 services:
   ubuntu-01:
+    user: apache
     container_name: ubuntu-01
     image: apache-2.4.49-vul-demo:latest
     build: .
@@ -11,7 +12,16 @@ services:
       - 5901:5901
     environment:
       - vncpassword=apache
+    volumes:
+      - type: bind
+        source: ./ssh/ubuntu-01/ubuntu-01
+        target: /home/apache/.ssh/ubuntu-01
+      - type: bind
+        source: ./ssh/ubuntu-01/ubuntu-01.pub
+        target: /home/apache/.ssh/ubuntu-01.pub
+
   ubuntu-02:
+    user: apache
     container_name: ubuntu-02
     image: apache-2.4.49-vul-demo:latest
     build: .
@@ -21,3 +31,13 @@ services:
       - 2022:22
     environment:
       - vncpassword=apache
+    volumes:
+      - type: bind
+        source: ./ssh/ubuntu-02/ubuntu-02
+        target: /home/apache/.ssh/ubuntu-02
+      - type: bind
+        source: ./ssh/ubuntu-02/ubuntu-02.pub
+        target: /home/apache/.ssh/ubuntu-02.pub
+      - type: bind
+        source: ./ssh/ubuntu-02/authorized_keys
+        target: /home/apache/.ssh/authorized_keys
