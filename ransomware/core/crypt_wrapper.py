@@ -77,11 +77,11 @@ def decrypt_file(file_path, key):
             with open(file_path, 'rb') as file:
                 encrypted_data = file.read()
 
-            fernet = Fernet(key)
-            decrypted_data = fernet.decrypt(encrypted_data)
+                fernet = Fernet(key)
+                decrypted_data = fernet.decrypt(encrypted_data)
 
-            with open(file_path[:len(file_path)-4], 'wb') as file:
-                file.write(decrypted_data)
+                with open(file_path[:len(file_path)-4], 'wb') as file_dec:
+                    file_dec.write(decrypted_data)
 
             os.remove(file_path)
         print(f"File '{file_path}' decrypted and replaced successfully.")

@@ -5,4 +5,4 @@ attacker-keygen:
 
 # the attacker decrypts your key with his private key and sends it back to you
 attacker-decrypt:
-	python decrypt-sym-key.py
+	python decrypt-sym-key.py ./private_key.pem 'key'

