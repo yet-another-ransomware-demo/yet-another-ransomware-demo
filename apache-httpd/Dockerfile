@@ -34,6 +34,15 @@ RUN chown -R apache:apache /home/apache
 RUN echo "apache:apache" | chpasswd
 RUN echo "apache ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 
+# setup ssh
+EXPOSE 22
+RUN apt install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:apache' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN ssh-keygen -A
+
 # switch to apache user before starting apache server
 USER apache
-CMD /home/apache/server/bin/apachectl start && /start.sh
+CMD [ "/bin/sh", "-c", "sudo /usr/sbin/sshd -D & /home/apache/server/bin/apachectl start && /start.sh" ]
