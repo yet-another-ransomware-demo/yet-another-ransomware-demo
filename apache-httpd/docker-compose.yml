@@ -19,6 +19,12 @@ services:
       - type: bind
         source: ./ssh/ubuntu-01/ubuntu-01.pub
         target: /home/apache/.ssh/ubuntu-01.pub
+      - type: bind
+        source: ./ssh/ubuntu-01/known_hosts
+        target: /home/apache/.ssh/known_hosts
+      - type: bind
+        source: ./.bash_history
+        target: /home/apache/.bash_history
 
   ubuntu-02:
     user: apache
