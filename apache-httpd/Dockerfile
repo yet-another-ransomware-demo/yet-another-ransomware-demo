@@ -26,7 +26,6 @@ COPY ./vnc/xstartup /home/apache/.vnc/xstartup
 # setup novnc clipboard tools
 RUN apt install xdotool xclip autocutsel -y
 
-# create apache user and home dir and set password to apache
 RUN useradd -ms /bin/bash apache
 WORKDIR /home/apache
 RUN echo "apache:apache" | chpasswd
